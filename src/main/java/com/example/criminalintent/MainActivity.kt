@@ -8,6 +8,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
+    // Add the following code to give it a fragment to manage
         val currentFragment =
             supportFragmentManager.findFragmentById(R.id.fragment_container)
 
