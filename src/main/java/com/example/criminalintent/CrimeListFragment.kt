@@ -4,10 +4,13 @@ import android.os.Bundle
 import android.util.Log
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
+import androidx.recyclerview.widget.RecyclerView
 
 private const val TAG = "CrimeListFragment"
     // CrimeListFragment is an empty shell of a fragment. It logs the number of crimes found in CrimeListViewModel
 class CrimeListFragment : Fragment() {
+
+    private lateinit var crimeRecyclerView: RecyclerView
 
     private val crimeListViewModel: CrimeListViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeListViewModel::class.java)
