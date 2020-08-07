@@ -40,6 +40,11 @@ class CrimeListFragment : Fragment() {
 
         return view
     }
+     //  The beginnings of a ViewHolder
+     private inner class CrimeHolder(view: View)
+         : RecyclerView.ViewHolder(view) {
+
+     }
 
     companion object {
         fun newInstance(): CrimeListFragment {
