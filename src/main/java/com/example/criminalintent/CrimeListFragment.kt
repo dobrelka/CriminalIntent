@@ -17,6 +17,7 @@ private const val TAG = "CrimeListFragment"
 class CrimeListFragment : Fragment() {
 
     private lateinit var crimeRecyclerView: RecyclerView
+    private var adapter: CrimeAdapter? = null
 
     private val crimeListViewModel: CrimeListViewModel by lazy {
         ViewModelProviders.of(this).get(CrimeListViewModel::class.java)
@@ -39,8 +40,18 @@ class CrimeListFragment : Fragment() {
             view.findViewById(R.id.crime_recycler_view) as RecyclerView
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
 
+        updateUI()
+
         return view
     }
+    // UI  it will create a CrimeAdapter and set it on
+    //the RecyclerView
+     private fun updateUI() {
+         val crimes = crimeListViewModel.crimes
+         adapter = CrimeAdapter(crimes)
+         crimeRecyclerView.adapter = adapter
+     }
+
      //  The beginnings of a ViewHolder
      private inner class CrimeHolder(view: View)
          : RecyclerView.ViewHolder(view) {
@@ -49,7 +60,8 @@ class CrimeListFragment : Fragment() {
          val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
 
      }
-
+    // An adapter is a controller object that sits between the RecyclerView and the data set that
+    //the RecyclerView should display.
      private  inner  class CrimeAdapter(var crimes: List<Crime>)
          : RecyclerView.Adapter<CrimeHolder>() {
 
