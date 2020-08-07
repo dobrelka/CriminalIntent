@@ -55,9 +55,19 @@ class CrimeListFragment : Fragment() {
      //  The beginnings of a ViewHolder
      private inner class CrimeHolder(view: View)
          : RecyclerView.ViewHolder(view) {
+
+         private lateinit var crime: Crime
+
      //  Pulling out views in the constructor
-         val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
-         val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
+         private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
+         private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
+
+     // Writing a bind(Crime) function
+         fun bind(crime: Crime) {
+             this.crime = crime
+             titleTextView.text = this.crime.title
+             dateTextView.text = this.crime.date.toString()
+         }
 
      }
     // An adapter is a controller object that sits between the RecyclerView and the data set that
