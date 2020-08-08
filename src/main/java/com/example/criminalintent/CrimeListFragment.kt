@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
+import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -54,7 +55,7 @@ class CrimeListFragment : Fragment() {
 
      //  The beginnings of a ViewHolder
      private inner class CrimeHolder(view: View)
-         : RecyclerView.ViewHolder(view) {
+         : RecyclerView.ViewHolder(view), View.OnClickListener {
 
          private lateinit var crime: Crime
 
@@ -62,11 +63,21 @@ class CrimeListFragment : Fragment() {
          private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
          private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
 
+         init {
+             itemView.setOnClickListener(this)
+         }
+
      // Writing a bind(Crime) function
          fun bind(crime: Crime) {
              this.crime = crime
              titleTextView.text = this.crime.title
              dateTextView.text = this.crime.date.toString()
+         }
+
+     //  Modify the CrimeHolder to handle presses for the entire row
+         override fun onClick(v: View) {
+             Toast.makeText(context, "${crime.title} pressed!", Toast.LENGTH_SHORT)
+                     .show()
          }
 
      }
@@ -82,15 +93,13 @@ class CrimeListFragment : Fragment() {
 
          }
 
-         override fun getItemCount() = crimes.size
-
          override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
              val crime = crimes[position]
 
              holder.bind(crime)
          }
 
-
+        override fun getItemCount() = crimes.size
      }
 
     companion object {
