@@ -7,6 +7,8 @@ import com.example.criminalintent.Crime
 
 // The first parameter is a list of entity classes
 @Database(entities = [ Crime::class ], version = 1)
+// Enabling TypeConverters you tell your database to use the functions in that class
+@TypeConverters(CrimeTypeConverters::class)
 // The second parameter is the version of the database
 abstract class CrimeDatabase : RoomDatabase() {
 
