@@ -5,6 +5,7 @@ import androidx.room.PrimaryKey
 import java.lang.Math.random
 import java.util.*
 
+// Column table with four values
 @Entity
 data class Crime(@PrimaryKey val id: UUID = UUID.randomUUID(),
                  var title: String = "",
