@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Room
 import com.example.criminalintent.database.CrimeDatabase
 import java.lang.IllegalStateException
+import java.util.*
 
 private const val DATABASE_NAME = "crime-database"
 
@@ -18,6 +19,10 @@ class CrimeRepository private constructor(context: Context) {
     ).build()
 
     private val crimeDao = database.crimeDao()
+
+    fun getCrimes(): List<Crime> = crimeDao.getCrimes()
+
+    fun getCrime(id: UUID): Crime? = crimeDao.getCrime(id)
 
     // To make CrimeRepository a singleton, you add two functions to its companion object. One initializes
     //a new instance of the repository, and the other accesses the repository.
