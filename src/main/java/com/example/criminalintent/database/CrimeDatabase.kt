@@ -12,4 +12,7 @@ import com.example.criminalintent.Crime
 // The second parameter is the version of the database
 abstract class CrimeDatabase : RoomDatabase() {
 
+    // Registering the DAO in the database
+    abstract fun crimeDao(): CrimeDao
+
 }
