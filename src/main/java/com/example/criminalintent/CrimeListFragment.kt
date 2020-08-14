@@ -25,11 +25,6 @@ class CrimeListFragment : Fragment() {
         ViewModelProviders.of(this).get(CrimeListViewModel::class.java)
     }
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        Log.d(TAG, "Total crimes: ${crimeListViewModel.crimes.size}")
-    }
-
     // Setting up the view for CrimeListFragment
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -42,44 +37,42 @@ class CrimeListFragment : Fragment() {
             view.findViewById(R.id.crime_recycler_view) as RecyclerView
         crimeRecyclerView.layoutManager = LinearLayoutManager(context)
 
-        updateUI()
 
         return view
     }
-    // UI  it will create a CrimeAdapter and set it on
-    //the RecyclerView
-     private fun updateUI() {
-         val crimes = crimeListViewModel.crimes
-         adapter = CrimeAdapter(crimes)
-         crimeRecyclerView.adapter = adapter
+
+    private fun updateUI(crimes: List<Crime>) {
+
+        adapter = CrimeAdapter(crimes)
+        crimeRecyclerView.adapter = adapter
      }
 
-     //  The beginnings of a ViewHolder
-     private inner class CrimeHolder(view: View)
-         : RecyclerView.ViewHolder(view), View.OnClickListener {
+     // The beginnings of a ViewHolder
+    private inner class CrimeHolder(view: View)
+        : RecyclerView.ViewHolder(view), View.OnClickListener {
 
-         private lateinit var crime: Crime
+        private lateinit var crime: Crime
 
-     //  Pulling out views in the constructor
-         private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
-         private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
-         private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
+     // Pulling out views in the constructor
+        private val titleTextView: TextView = itemView.findViewById(R.id.crime_title)
+        private val dateTextView: TextView = itemView.findViewById(R.id.crime_date)
+        private val solvedImageView: ImageView = itemView.findViewById(R.id.crime_solved)
 
-         init {
-             itemView.setOnClickListener(this)
-         }
+        init {
+            itemView.setOnClickListener(this)
+        }
 
      // Writing a bind(Crime) function
-         fun bind(crime: Crime) {
-             this.crime = crime
-             titleTextView.text = this.crime.title
-             dateTextView.text = this.crime.date.toString()
-             solvedImageView.visibility = if (crime.isSolved) {
-                 View.VISIBLE
-             }  else {
-                 View.GONE
-             }
-         }
+        fun bind(crime: Crime) {
+            this.crime = crime
+            titleTextView.text = this.crime.title
+            dateTextView.text = this.crime.date.toString()
+            solvedImageView.visibility = if (crime.isSolved) {
+                View.VISIBLE
+            } else {
+                View.GONE
+            }
+        }
 
      //  Modify the CrimeHolder to handle presses for the entire row
          override fun onClick(v: View) {
@@ -90,15 +83,15 @@ class CrimeListFragment : Fragment() {
      }
     // An adapter is a controller object that sits between the RecyclerView and the data set that
     //the RecyclerView should display.
-     private  inner  class CrimeAdapter(var crimes: List<Crime>)
-         : RecyclerView.Adapter<CrimeHolder>() {
+    private  inner  class CrimeAdapter(var crimes: List<Crime>)
+        : RecyclerView.Adapter<CrimeHolder>() {
 
-         override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
-                 : CrimeHolder {
-             val view = layoutInflater.inflate(R.layout.list_item_crime, parent, false)
-             return CrimeHolder(view)
+        override fun onCreateViewHolder(parent: ViewGroup, viewType: Int)
+                : CrimeHolder {
+            val view = layoutInflater.inflate(R.layout.list_item_crime, parent, false)
+            return CrimeHolder(view)
 
-         }
+        }
 
          override fun onBindViewHolder(holder: CrimeHolder, position: Int) {
              val crime = crimes[position]
