@@ -116,8 +116,7 @@ class CrimeListFragment : Fragment() {
 
      //  Modify the CrimeHolder to handle presses for the entire row
          override fun onClick(v: View) {
-             Toast.makeText(context, "${crime.title} pressed!", Toast.LENGTH_SHORT)
-                     .show()
+            callbacks?.onCrimeSelected(crime.id)
          }
 
      }
