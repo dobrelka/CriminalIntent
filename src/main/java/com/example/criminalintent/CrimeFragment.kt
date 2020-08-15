@@ -60,18 +60,7 @@ class CrimeFragment : Fragment() {
                 // This space internationally left blank
             }
 
-            // When the hosting activity needs an instance of that fragment,
-            // you have it call the newInstance(...)
-            companion object {
-                fun newInstance(crimeId: UUID): CrimeFragment {
-                    val args = Bundle().apply {
-                        putSerializable(ARG_CRIME_ID, crimeId)
-                    }
-                    return CrimeFragment().apply {
-                        arguments = args
-                    }
-                }
-            }
+
 
             override fun onTextChanged(
                 sequence: CharSequence?,
@@ -93,6 +82,19 @@ class CrimeFragment : Fragment() {
         solvedCheckBox.apply {
             setOnCheckedChangeListener { _, isChecked ->
                 crime.isSolved = isChecked // Listening for CheckBox changes
+            }
+        }
+    }
+
+    // When the hosting activity needs an instance of that fragment,
+    // you have it call the newInstance(...)
+    companion object {
+        fun newInstance(crimeId: UUID): CrimeFragment {
+            val args = Bundle().apply {
+                putSerializable(ARG_CRIME_ID, crimeId)
+            }
+            return CrimeFragment().apply {
+                arguments = args
             }
         }
     }
