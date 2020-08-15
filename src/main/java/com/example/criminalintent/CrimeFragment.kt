@@ -10,6 +10,9 @@ import android.widget.Button
 import android.widget.CheckBox
 import android.widget.EditText
 import androidx.fragment.app.Fragment
+import java.util.*
+
+private const val ARG_CRIME_ID = "crime_id"
 
 class CrimeFragment : Fragment() {
     private lateinit var crime: Crime
@@ -55,6 +58,19 @@ class CrimeFragment : Fragment() {
                 after: Int
             )  {
                 // This space internationally left blank
+            }
+
+            // When the hosting activity needs an instance of that fragment,
+            // you have it call the newInstance(...)
+            companion object {
+                fun newInstance(crimeId: UUID): CrimeFragment {
+                    val args = Bundle().apply {
+                        putSerializable(ARG_CRIME_ID, crimeId)
+                    }
+                    return CrimeFragment().apply {
+                        arguments = args
+                    }
+                }
             }
 
             override fun onTextChanged(
