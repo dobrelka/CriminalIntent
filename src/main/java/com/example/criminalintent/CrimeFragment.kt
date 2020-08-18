@@ -107,6 +107,12 @@ class CrimeFragment : Fragment() {
         }
     }
 
+    // Update CrimeFragment to save the user’s edited crime data to the database
+    override fun onStop() {
+        super.onStop()
+        crimeDetailViewModel.saveCrime(crime)
+    }
+
     private fun updateUI() {
         titleField.setText(crime.title)
         dateButton.text = crime.date.toString()
