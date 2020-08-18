@@ -13,6 +13,8 @@ import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProviders
 import java.util.*
+import androidx.lifecycle.Observer
+import java.util.UUID
 
 private const val TAG = "CrimeFragment"
 private const val ARG_CRIME_ID = "crime_id"
@@ -52,6 +54,19 @@ class CrimeFragment : Fragment() {
         return view
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        crimeDetailViewModel.crimeLiveData.observe(
+            viewLifecycleOwner,
+            Observer { crime ->
+                crime?.let {
+                    this.crime = crime
+                    updateUI()
+                }
+            })
+
+    }
+
     // Adding a listener to the  EditText widget
 
     override fun onStart() {
@@ -67,8 +82,6 @@ class CrimeFragment : Fragment() {
             )  {
                 // This space internationally left blank
             }
-
-
 
             override fun onTextChanged(
                 sequence: CharSequence?,
@@ -92,6 +105,12 @@ class CrimeFragment : Fragment() {
                 crime.isSolved = isChecked // Listening for CheckBox changes
             }
         }
+    }
+
+    private fun updateUI() {
+        titleField.setText(crime.title)
+        dateButton.text = crime.date.toString()
+        solvedCheckBox.isChecked = crime.isSolved
     }
 
     // When the hosting activity needs an instance of that fragment,
