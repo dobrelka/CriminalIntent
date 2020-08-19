@@ -10,6 +10,10 @@ private const val ARG_DATE = "date"
 
 class DatePickerFragment : DialogFragment() {
 
+    interface Callbacks {
+        fun onDateSelected(date: Date)
+    }
+
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Now CrimeFragment is successfully telling DatePickerFragment what date to show
         val date = arguments?.getSerializable(ARG_DATE) as Date
