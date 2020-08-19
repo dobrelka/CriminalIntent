@@ -108,6 +108,7 @@ class CrimeFragment : Fragment() {
     }
 
     // Update CrimeFragment to save the user’s edited crime data to the database
+    //Fragment.onStop() called any time your fragment moves to the stopped state (that is, any time the fragment moves entirely out of view)
     override fun onStop() {
         super.onStop()
         crimeDetailViewModel.saveCrime(crime)
