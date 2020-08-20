@@ -7,4 +7,8 @@ class CrimeListViewModel : ViewModel() {
     private val crimeRepository = CrimeRepository.get()
     // Renamed val crimes in val crimeListLiveData
     val crimeListLiveData = crimeRepository.getCrimes()
+
+    fun addCrime(crime: Crime) {
+        crimeRepository.addCrime(crime)
+    }
 }
