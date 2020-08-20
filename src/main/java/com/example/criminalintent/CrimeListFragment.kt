@@ -93,6 +93,21 @@ class CrimeListFragment : Fragment() {
         inflater.inflate(R.menu.fragment_crime_list, menu)
     }
 
+    // Implement onOptionsItemSelected(MenuItem) to respond to MenuItem
+    //selection by creating a new Crime , saving it to the database, and then notifying the parent activity that
+    //the new crime has been selected.
+    override fun onOptionsItemSelected(item: MenuItem): Boolean {
+        return when (item.itemId) {
+            R.id.new_crime -> {
+                val crime = Crime()
+                crimeListViewModel.addCrime(crime)
+                callbacks?.onCrimeSelected(crime.id)
+                true
+            }
+            else -> return super.onOptionsItemSelected(item)
+        }
+    }
+
     private fun updateUI(crimes: List<Crime>) {
 
         adapter = CrimeAdapter(crimes)
