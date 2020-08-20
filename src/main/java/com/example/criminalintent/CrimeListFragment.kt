@@ -42,6 +42,13 @@ class CrimeListFragment : Fragment() {
         callbacks = context as Callbacks?
     }
 
+    // Define CrimeListFragment.onCreate(Bundle?) and let the FragmentManager know that
+        //CrimeListFragment needs to receive menu callbacks
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        setHasOptionsMenu(true)
+    }
+
     // Setting up the view for CrimeListFragment
     override fun onCreateView(
         inflater: LayoutInflater,
