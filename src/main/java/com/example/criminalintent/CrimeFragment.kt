@@ -142,7 +142,17 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
                     Intent(Intent.ACTION_PICK, ContactsContract.Contacts.CONTENT_URI)
 
             setOnClickListener {
-            startActivityForResult(pickContactIntent, REQUEST_CONTACT)
+                startActivityForResult(pickContactIntent, REQUEST_CONTACT)
+            }
+
+            // The MATCH_DEFAULT_ONLY flag restricts this search to activities with the CATEGORY_DEFAULT flag, PackageManager
+            //If this search is successful, it will return an instance of ResolveInfo telling you all about which activity it found
+            val packageManager: PackageManager = requireActivity().packageManager
+            val resolvedActivity: ResolveInfo? =
+                    packageManager.resolveActivity(pickContactIntent,
+                            PackageManager.MATCH_DEFAULT_ONLY)
+            if (resolvedActivity == null) {
+                isEnabled = false
             }
         }
     }
