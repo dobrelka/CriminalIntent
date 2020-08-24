@@ -64,6 +64,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        val crimeId = arguments?.getSerializable(ARG_CRIME_ID) as UUID
         crimeDetailViewModel.crimeLiveData.observe(
             viewLifecycleOwner,
             Observer { crime ->
@@ -188,12 +189,12 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
             resultCode != Activity.RESULT_OK -> return
 
             requestCode == REQUEST_CONTACT && data != null -> {
-                val contactUri: Uri? = data.data
+                val contactUri: Uri = data.data?:return
                 // Specify which fields you want your query to return values for.
                 val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
                 // Perform your query - the contactUri is like a "where" clause here
                 val cursor = requireActivity().contentResolver
-                        .query(contactUri, queryFields, null, null, null)
+                    .query(contactUri, queryFields, null, null, null)
                 cursor?.use {
                     // Double-check that you actually got results
                     if (it.count == 0) {
@@ -222,7 +223,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         }
 
         val dateString = DateFormat.format(DATE_FORMAT, crime.date).toString()
-        var suspect = if (crime.suspect.isBlank()) {
+        val suspect = if (crime.suspect.isBlank()) {
             getString(R.string.crime_report_no_suspect)
         } else {
             getString(R.string.crime_report_suspect, crime.suspect)
