@@ -166,6 +166,10 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
             isChecked = crime.isSolved
             jumpDrawablesToCurrentState()
         }
+        // Modify updateUI() to set the text on the CHOOSE SUSPECT button if the crime has a suspect.
+        if (crime.suspect.isNotEmpty()) {
+            suspectButton.text = crime.suspect
+        }
     }
 
     //  Adding a function that creates four strings and then pieces them together and
