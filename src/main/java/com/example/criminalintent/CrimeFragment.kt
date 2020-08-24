@@ -166,9 +166,39 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
             isChecked = crime.isSolved
             jumpDrawablesToCurrentState()
         }
-        // Modify updateUI() to set the text on the CHOOSE SUSPECT button if the crime has a suspect.
+        // Modify updateUI() to set the text on the CHOOSE SUSPECT button
+        // if the crime has a suspect.
         if (crime.suspect.isNotEmpty()) {
             suspectButton.text = crime.suspect
+        }
+    }
+
+    override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        when {
+            resultCode != Activity.RESULT_OK -> return
+
+            requestCode == REQUEST_CONTACT && data != null -> {
+                val contactUri: Uri? = data.data
+                // Specify which fields you want your query to return values for.
+                val queryFields = arrayOf(ContactsContract.Contacts.DISPLAY_NAME)
+                // Perform your query - the contactUri is like a "where" clause here
+                val cursor = requireActivity().contentResolver
+                        .query(contactUri, queryFields, null, null, null)
+                cursor?.use {
+                    // Double-check that you actually got results
+                    if (it.count == 0) {
+                        return
+                    }
+
+                    // Pull out the first column of the first row of data -
+                    // that is your suspect's name.
+                    it.moveToFirst()
+                    val suspect = it.getString(0)
+                    crime.suspect = suspect
+                    crimeDetailViewModel.saveCrime(crime)
+                    suspectButton.text = suspect
+                }
+            }
         }
     }
 
