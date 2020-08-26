@@ -5,6 +5,7 @@ import androidx.lifecycle.LiveData
 import androidx.room.Room
 import com.example.criminalintent.database.CrimeDatabase
 import com.example.criminalintent.database.migration_1_2
+import java.io.File
 import java.lang.IllegalStateException
 import java.util.*
 import java.util.concurrent.Executors
@@ -25,6 +26,7 @@ class CrimeRepository private constructor(context: Context) {
     private val crimeDao = database.crimeDao()
     // Create an executor that uses a new thread (which will always be a background thread).
     private val executor = Executors.newSingleThreadExecutor()
+    private val filesDir = context.applicationContext.filesDir
 
     // Updated CrimeRepository to return LiveData from its query functions
     fun getCrimes(): LiveData<List<Crime>> = crimeDao.getCrimes()
@@ -42,6 +44,8 @@ class CrimeRepository private constructor(context: Context) {
             crimeDao.addCrime(crime)
         }
     }
+
+    fun getPhotoFile(crime: Crime): File = File(filesDir, crime.photoFileName)
 
     // To make CrimeRepository a singleton, you add two functions to its companion object. One initializes
     //a new instance of the repository, and the other accesses the repository.
