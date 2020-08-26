@@ -11,4 +11,8 @@ data class Crime(@PrimaryKey val id: UUID = UUID.randomUUID(),
                  var title: String = "",
                  var date: Date = Date(),
                  var isSolved:Boolean = false,
-                 var suspect: String = "")
+                 var suspect: String = "") {
+    // PhotoFileName does not include the path to the folder the photo will be stored in.
+    val photoFileName
+        get() = "IMG_$id.jpg"
+}
