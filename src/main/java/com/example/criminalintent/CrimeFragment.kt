@@ -278,6 +278,8 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
             }
 
             requestCode == REQUEST_PHOTO -> {
+                requireActivity().revokeUriPermission(photoUri,
+                    Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
                 updatePhotoView()
             }
         }
