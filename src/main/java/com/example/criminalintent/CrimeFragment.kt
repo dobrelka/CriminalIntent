@@ -213,6 +213,13 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         crimeDetailViewModel.saveCrime(crime)
     }
 
+    override fun onDetach() {
+        super.onDetach()
+        // Revoke photo permissions if the user leaves without taking a photo.
+        requireActivity().revokeUriPermission(photoUri,
+            Intent.FLAG_GRANT_WRITE_URI_PERMISSION)
+    }
+
     override fun onDateSelected(date: Date) {
         crime.date = date
         updateUI()
