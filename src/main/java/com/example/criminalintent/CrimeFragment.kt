@@ -269,6 +269,10 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
                     suspectButton.text = suspect
                 }
             }
+
+            requestCode == REQUEST_PHOTO -> {
+                updatePhotoView()
+            }
         }
     }
 
