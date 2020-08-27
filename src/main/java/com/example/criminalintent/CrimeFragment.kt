@@ -230,6 +230,7 @@ class CrimeFragment : Fragment(), DatePickerFragment.Callbacks {
         if (crime.suspect.isNotEmpty()) {
             suspectButton.text = crime.suspect
         }
+        updatePhotoView()
     }
 
     // To load this Bitmap into your ImageView , adding a function to CrimeFragment to update photoView .
