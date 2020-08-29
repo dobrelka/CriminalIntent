@@ -23,6 +23,7 @@
                     android:layout_height="80dp"
                     android:background="@android:color/darker_gray"
                     android:cropToPadding="true"
+                    android:contentDescription="@string/crime_photo_no_image_description"
                     android:scaleType="centerInside"/>
 
             <ImageButton
